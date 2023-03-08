@@ -26,7 +26,7 @@ jobs:
 
     - name: Restore packages
       run: |
-        cd src \
+        cd src/backend \
          && npm install \
 
     - name: Build & Deploy serverless meal planner
