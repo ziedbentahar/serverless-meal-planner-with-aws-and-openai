@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "module": "commonjs",
+        "outDir": "../dist",
+        "baseUrl": "./",
+        "noImplicitAny": true,
+        "target": "es2019",
+        "types": [
+            "node",
+            "jest"
+        ],
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node"
+    },
+    "require": [
+        "ts-node/register/transpile-only"
+    ],
+    "exclude": [
+        "node_modules",
+        "esbuild.config.js",
+        "__tests__/**/*.spec.ts"
+    ]
+}
