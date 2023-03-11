@@ -17,7 +17,7 @@ interface LambdasProps extends NestedStackProps {
   applicationName: string;
   mediaBucket: IBucket;
   mediaUrl: string;
-  mailFromDomain: string;
+  mailFrom: string;
 }
 
 export class Lambdas extends NestedStack {
@@ -29,7 +29,7 @@ export class Lambdas extends NestedStack {
   constructor(scope: Construct, id: string, props?: LambdasProps) {
     super(scope, id, props);
 
-    const { applicationName, mediaBucket, mediaUrl, mailFromDomain } = props!;
+    const { applicationName, mediaBucket, mediaUrl, mailFrom } = props!;
 
     const secret = new Secret(this, "open-ai-api-key-secret", {
       secretName: "open-ai-api-key-secret",
@@ -111,7 +111,7 @@ export class Lambdas extends NestedStack {
       functionName: `${applicationName}-send-meal-plan-email`,
       environment: {
         MEDIA_URL: mediaUrl,
-        SOURCE_EMAIL: mailFromDomain,
+        SOURCE_EMAIL: mailFrom,
       },
     });
 

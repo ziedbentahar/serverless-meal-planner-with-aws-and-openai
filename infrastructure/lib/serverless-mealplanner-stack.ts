@@ -29,7 +29,7 @@ export class ServerlessMealPlanner extends Stack {
       applicationName,
       mediaBucket: mediaStorage.bucket,
       mediaUrl: mediaStorage.mediaUrl,
-      mailFromDomain: emailService.mailFromDomain,
+      mailFrom: emailService.mailFrom,
     });
 
     const stateMachine = new MealPlannerStateMachine(this, "state-machine", {

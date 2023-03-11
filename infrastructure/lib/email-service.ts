@@ -11,7 +11,7 @@ interface EmailSeviceProps extends NestedStackProps {
 }
 
 export class EmailService extends NestedStack {
-  readonly mailFromDomain: string;
+  readonly mailFrom: string;
 
   constructor(scope: Construct, id: string, props?: EmailSeviceProps) {
     super(scope, id, props);
@@ -22,14 +22,15 @@ export class EmailService extends NestedStack {
       domainName: hostedZoneDomainName,
     });
 
-    this.mailFromDomain = `mail.${hostedZoneDomainName}`;
+    const mailFromDomain = `mail.${hostedZoneDomainName}`;
+    const mailFrom = `aimealplanner@${mailFromDomain}`;
 
     const identity = new EmailIdentity(
       this,
       `${applicationName}-ses-verified-identity`,
       {
         identity: Identity.publicHostedZone(hostedZone),
-        mailFromDomain: this.mailFromDomain,
+        mailFromDomain,
       }
     );
 
