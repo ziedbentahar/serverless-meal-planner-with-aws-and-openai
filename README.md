@@ -8,4 +8,4 @@ Full code and Github actions workflow for this bog post:
 https://medium.com/@zied-ben-tahar/building-an-ai-powered-and-serverless-meal-planner-with-openai-aws-step-functions-aws-lambda-ce45c45794cc
 
 
-![image](https://user-images.githubusercontent.com/6813975/201932133-8152afe3-00e5-456d-8fe1-2356ac3d89da.png)
+![image](https://user-images.githubusercontent.com/6813975/224505487-555055f9-2085-4796-9bd7-eedba0acb594.png)
