@@ -23,7 +23,7 @@ export class EmailService extends NestedStack {
     });
 
     const mailFromDomain = `mail.${hostedZoneDomainName}`;
-    const mailFrom = `aimealplanner@${mailFromDomain}`;
+    this.mailFrom = `ai-meal-planner@${mailFromDomain}`;
 
     const identity = new EmailIdentity(
       this,
