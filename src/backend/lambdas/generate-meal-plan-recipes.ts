@@ -1,7 +1,8 @@
 import { getSecretValue } from "shared/secrets-provider";
 import { MealPlanRequest } from "types";
+const { OpenAIApi } = require("openai");
 
-const { Configuration, OpenAIApi } = require("openai");
+const openai = new OpenAIApi();
 
 export const handler = async (event: MealPlanRequest) => {
   const { email, ingredients } = event;
@@ -14,11 +15,6 @@ Each meal recipe contains a name, a five sentences for instructions and an array
 
   const apiKey = await getSecretValue(process.env.OPEN_AI_API_SECRET_NAME);
 
-  const configuration = new Configuration({
-    apiKey,
-  });
-  const openai = new OpenAIApi(configuration);
-
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt,
@@ -27,6 +23,11 @@ Each meal recipe contains a name, a five sentences for instructions and an array
     top_p: 0.4,
     frequency_penalty: 0,
     presence_penalty: 0,
+  }, 
+  {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
   });
 
   const mealPlanResponse = JSON.parse(response.data.choices[0].text);
