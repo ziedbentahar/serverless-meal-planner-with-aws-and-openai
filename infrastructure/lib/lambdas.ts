@@ -111,7 +111,7 @@ export class Lambdas extends NestedStack {
       functionName: `${applicationName}-send-meal-plan-email`,
       environment: {
         MEDIA_URL: mediaUrl,
-        SOURCE_URL: "mymealplan@mail.inflow-it-labs.tk",
+        SOURCE_EMAIL: mailFromDomain,
       },
     });
 
