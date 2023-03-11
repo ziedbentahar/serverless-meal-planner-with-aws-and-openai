@@ -23,7 +23,7 @@ export const handler = async (event: GeneratedMealPlan, context: Context) => {
     Destination: {
       ToAddresses: [event.mailTo],
     },
-    Source: "mymealplan@mail.inflow-it-labs.tk",
+    Source: process.env.SOURCE_EMAIL,
     Template: "meal-plan",
     TemplateData: JSON.stringify({
       mealPlan,

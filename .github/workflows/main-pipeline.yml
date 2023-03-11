@@ -33,5 +33,8 @@ jobs:
       run: |
         cd infrastructure \
          && npm install \
-         && npx cdk deploy --require-approval never
+         && npx cdk deploy --require-approval never \
+          --context hostedZoneDomainName=inflow-it-labs.tk
+
+
           

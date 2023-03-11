@@ -7,24 +7,29 @@ import fs = require("fs");
 
 interface EmailSeviceProps extends NestedStackProps {
   applicationName: string;
+  hostedZoneDomainName: string;
 }
 
 export class EmailService extends NestedStack {
+  readonly mailFromDomain: string;
+
   constructor(scope: Construct, id: string, props?: EmailSeviceProps) {
     super(scope, id, props);
 
-    const { applicationName } = props!;
+    const { applicationName, hostedZoneDomainName } = props!;
 
     const hostedZone = HostedZone.fromLookup(this, "hosted-zone", {
-      domainName: "inflow-it-labs.tk",
+      domainName: hostedZoneDomainName,
     });
+
+    this.mailFromDomain = `mail.${hostedZoneDomainName}`;
 
     const identity = new EmailIdentity(
       this,
       `${applicationName}-ses-verified-identity`,
       {
         identity: Identity.publicHostedZone(hostedZone),
-        mailFromDomain: "mail.inflow-it-labs.tk",
+        mailFromDomain: this.mailFromDomain,
       }
     );
 

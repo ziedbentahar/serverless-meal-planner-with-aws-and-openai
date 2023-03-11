@@ -12,18 +12,24 @@ export class ServerlessMealPlanner extends Stack {
 
     const applicationName = "serverless-meal-planner";
 
+    const hostedZoneDomainName = this.node.tryGetContext(
+      "hostedZoneDomainName"
+    );
+
     const mediaStorage = new MediaStorage(this, "storage", {
       applicationName,
     });
 
-    new EmailService(this, "email-service", {
+    const emailService = new EmailService(this, "email-service", {
       applicationName,
+      hostedZoneDomainName,
     });
 
     const lambdas = new Lambdas(this, "lambdas", {
       applicationName,
       mediaBucket: mediaStorage.bucket,
       mediaUrl: mediaStorage.mediaUrl,
+      mailFromDomain: emailService.mailFromDomain,
     });
 
     const stateMachine = new MealPlannerStateMachine(this, "state-machine", {

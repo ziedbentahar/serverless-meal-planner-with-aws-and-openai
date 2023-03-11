@@ -17,34 +17,8 @@ interface LambdasProps extends NestedStackProps {
   applicationName: string;
   mediaBucket: IBucket;
   mediaUrl: string;
+  mailFromDomain: string;
 }
-
-const AWSParametersAndSecretsLambdaExtension: {
-  [region: string]: { LayerArn: string };
-} = {
-  "us-east-1": {
-    LayerArn:
-      "arn:aws:lambda:us-east-1:177933569100:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
-  },
-  "us-east-2": {
-    LayerArn:
-      "arn:aws:lambda:us-east-2:590474943231:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
-  },
-  "eu-west-1": {
-    LayerArn:
-      "arn:aws:lambda:eu-west-1:015030872274:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
-  },
-  "eu-west-2": {
-    LayerArn:
-      "arn:aws:lambda:eu-west-2:133256977650:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
-  },
-  "eu-west-3": {
-    LayerArn:
-      "arn:aws:lambda:eu-west-3:780235371811:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
-  },
-};
-
-const x = AWSParametersAndSecretsLambdaExtension["eu-west-2"].LayerArn;
 
 export class Lambdas extends NestedStack {
   readonly receipeImageLambda: IFunction;
@@ -55,7 +29,7 @@ export class Lambdas extends NestedStack {
   constructor(scope: Construct, id: string, props?: LambdasProps) {
     super(scope, id, props);
 
-    const { applicationName, mediaBucket, mediaUrl } = props!;
+    const { applicationName, mediaBucket, mediaUrl, mailFromDomain } = props!;
 
     const secret = new Secret(this, "open-ai-api-key-secret", {
       secretName: "open-ai-api-key-secret",
@@ -137,6 +111,7 @@ export class Lambdas extends NestedStack {
       functionName: `${applicationName}-send-meal-plan-email`,
       environment: {
         MEDIA_URL: mediaUrl,
+        SOURCE_URL: "mymealplan@mail.inflow-it-labs.tk",
       },
     });
 
@@ -149,3 +124,28 @@ export class Lambdas extends NestedStack {
     );
   }
 }
+
+const AWSParametersAndSecretsLambdaExtension: {
+  [region: string]: { LayerArn: string };
+} = {
+  "us-east-1": {
+    LayerArn:
+      "arn:aws:lambda:us-east-1:177933569100:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
+  },
+  "us-east-2": {
+    LayerArn:
+      "arn:aws:lambda:us-east-2:590474943231:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
+  },
+  "eu-west-1": {
+    LayerArn:
+      "arn:aws:lambda:eu-west-1:015030872274:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
+  },
+  "eu-west-2": {
+    LayerArn:
+      "arn:aws:lambda:eu-west-2:133256977650:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
+  },
+  "eu-west-3": {
+    LayerArn:
+      "arn:aws:lambda:eu-west-3:780235371811:layer:AWS-Parameters-and-Secrets-Lambda-Extension:2",
+  },
+};
